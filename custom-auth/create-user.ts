@@ -2,7 +2,7 @@ import { CognitoIdentityServiceProvider } from "aws-sdk";
 import { logger} from "./common.js";
 
 let config = {
-    userPoolID: process.env.user_pool_ID
+    userPoolID: process.env.USER_POOL_ID
 };
 
 function requireConfig<K extends keyof typeof config>(

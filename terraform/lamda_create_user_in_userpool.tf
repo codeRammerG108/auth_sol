@@ -84,9 +84,9 @@ resource "aws_lambda_function" "add_cognito_user" {
 }
 
 # Lambda Resource Policy
-resource "aws_lambda_permission" "resource_policy_create_auth" {
-  action        = "lambda:InvokeFunction"
-  function_name = aws_lambda_function.add_cognito_user.function_name
-  principal     = "apigateway.amazonaws.com"
-  source_arn    = aws_api_gateway_rest_api.composable_auth_api_gateway.arn
-}
+# resource "aws_lambda_permission" "resource_policy_create_auth" {
+#   action        = "lambda:InvokeFunction"
+#   function_name = aws_lambda_function.add_cognito_user.function_name
+#   principal     = "apigateway.amazonaws.com"
+#   source_arn    = aws_api_gateway_rest_api.composable_auth_api_gateway.arn
+# }
