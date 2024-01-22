@@ -59,4 +59,5 @@ jobs:
    
       - name: Destroy using Terraform
         working-directory: terraform
-        run: terraform destroy
+        run: terraform destroy -auto-approve
+   
