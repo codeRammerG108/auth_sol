@@ -1,0 +1,15 @@
+{
+    "define": {
+      "FILENAME_PLACEHOLDER": ""
+    },
+    "entryPoints": [],
+    "bundle": true,
+    "format": "esm",
+    "target": "node18",
+    "outdir": "dist",
+    "outExtension": {
+      ".js": ".mjs"
+    },
+    "platform": "neutral",
+    "external": []
+  }

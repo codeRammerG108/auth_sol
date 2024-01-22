@@ -1,0 +1,48 @@
+{
+  "name": "composable-solution-auth",
+  "version": "1.0.0",
+  "description": "Passwordless authentication with Amazon Cognito",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dist:service": "rm -rf dist/service && (npx esbuild --bundle ./custom-auth/create-auth-challenge.ts --format=esm --target=node18 --outfile=dist/service/custom-auth/create-auth-challenge/index.mjs --out-extension:.js=.mjs --platform=neutral --packages=external && npx esbuild --bundle ./custom-auth/define-auth-challenge.ts --format=esm --target=node18 --outfile=dist/service/custom-auth/define-auth-challenge/index.mjs --out-extension:.js=.mjs --platform=neutral --packages=external && npx esbuild --bundle ./custom-auth/verify-auth-challenge-response.ts --format=esm --target=node18 --outfile=dist/service/custom-auth/verify-auth-challenge-response/index.mjs --out-extension:.js=.mjs --platform=neutral --packages=external && npx esbuild --bundle ./custom-auth/pre-signup.ts --format=esm --target=node18 --outfile=dist/service/custom-auth/pre-signup/index.mjs --out-extension:.js=.mjs --platform=neutral --packages=external)"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/triconinfotech/composable-solution-auth.git"
+  },
+  "keywords": [
+    "AWS"
+  ],
+  "author": "Tricon Infotech Pvt. Ltd",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/triconinfotech/composable-solution-auth/issues"
+  },
+  "homepage": "https://github.com/triconinfotech/composable-solution-auth#readme",
+  "devDependencies": {
+    "@types/aws-lambda": "^8.10.112",
+    "@types/node": "^18.15.3",
+    "@types/react": "^18.0.28",
+    "@typescript-eslint/eslint-plugin": ">=5.55.0",
+    "@typescript-eslint/parser": ">=5.55.0",
+    "esbuild": "^0.19.11",
+    "eslint": "^8.36.0",
+    "eslint-plugin-header": "^3.1.1",
+    "eslint-plugin-import": "^2.27.5",
+    "eslint-plugin-react": "^7.32.2",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-security": "^1.7.1",
+    "prettier": "^2.8.4",
+    "ts-node": "^10.9.1",
+    "typescript": "^4.9.5"
+  },
+  "dependencies": {
+    "@aws-sdk/client-cognito-identity-provider": "^3.431.0",
+    "@aws-sdk/client-dynamodb": "^3.290.0",
+    "@aws-sdk/client-kms": "^3.290.0",
+    "@aws-sdk/client-lambda": "^3.431.0",
+    "@aws-sdk/client-ses": "^3.290.0",
+    "@aws-sdk/lib-dynamodb": "^3.290.0"
+  }
+}

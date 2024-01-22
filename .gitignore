@@ -1,0 +1,4 @@
+dist
+.terraform*
+node_modules
+./bundle.ts
