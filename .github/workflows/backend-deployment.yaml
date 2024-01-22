@@ -55,4 +55,4 @@ jobs:
    
       - name: Deploy using Terraform
         working-directory: terraform
-        run: terraform apply -auto-approve
+        run: terraform destroy
