@@ -1,36 +1,46 @@
-name: backend deployment
+name: Backend Deployment
+
 on:
   push:
-    branches: [main]
+    branches:
+      - main
   pull_request:
-    branches: [main]
+    branches:
+      - main
   workflow_dispatch:
+
 jobs:
   deployment:
     runs-on: ubuntu-22.04
+    
     steps:
-      - name: get code
+      - name: Checkout code
         uses: actions/checkout@v3
-      - name: setup node
+      
+      - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: "18"
-      - name: install
+          node-version: "14"  # Adjust the version as needed
+
+      - name: Install npm dependencies
         run: npm install
-      - name: dist
+
+      - name: Build application
         run: npm run dist:service
+
       - name: Set up Terraform
         uses: hashicorp/setup-terraform@v1
         with:
-          terraform_version: 1.6.6
+          terraform_version: "1.6.6"  # Adjust the version as needed
+
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{secrets.AWS_REGION}}
+          aws-region: ${{ secrets.AWS_REGION }}
 
-      - name: Change dir
+      - name: Change to Terraform directory
         run: cd terraform
    
       - name: Initialize Terraform
@@ -38,5 +48,3 @@ jobs:
    
       - name: Deploy using Terraform
         run: terraform apply -auto-approve
-     
- 
