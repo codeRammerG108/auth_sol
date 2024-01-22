@@ -1,4 +1,4 @@
-project_name = "magicLink-Authentication"
+project_name = "magicLink-solution"
 
 allowed_origins = [ "http://localhost:5173", "*" ]
 
