@@ -41,7 +41,7 @@ jobs:
           aws-region: ${{ secrets.AWS_REGION }}
 
       - name: Change to Terraform directory
-        run: cd terraform
+        run: cd ../terraform
    
       - name: Initialize Terraform
         run: terraform init
