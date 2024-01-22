@@ -40,16 +40,17 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_REGION }}
 
-      - name: Display current directory
-        run: ls -l
+      # - name: Display current directory
+      #   run: ls -l
 
-      - name: Change to Terraform directory
-        run: cd dist
+      # - name: Change to Terraform directory
+      #   run: cd dist
         
-      - name: Display current directory
-        run: pwd
-        
+      # - name: Display current directory
+      #   run: pwd
+
       - name: Initialize Terraform
+        working-directory: terraform
         run: terraform init
    
       - name: Deploy using Terraform
