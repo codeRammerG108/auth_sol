@@ -23,8 +23,7 @@ resource "aws_iam_role" "role_add_cognito_user" {
   resource "aws_iam_policy" "policy_add_cognito_user" {
     name        = "${var.project_name}_aws_policy_add_cognito_user"
     description = "AWS IAM Policy for managing AWS Lambda role"
-    policy=<<EOF
-{
+    policy= jsonencode ({
       "Version": "2012-10-17",
       "Statement": [
         {
@@ -43,12 +42,11 @@ resource "aws_iam_role" "role_add_cognito_user" {
 				"cognito-idp:AdminCreateUser"
 			],
 			"Resource": [
-				${aws_cognito_user_pool.composable_auth_user_pool.arn}
+				"${aws_cognito_user_pool.composable_auth_user_pool.arn}"
 			]
 		} 
   ]
-}
-EOF
+})
 }
 
 # Attach IAM Policy to IAM Role
