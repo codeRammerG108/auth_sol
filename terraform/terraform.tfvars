@@ -8,4 +8,4 @@ log_level = "DEBUG"
 
 aws_region = "us-west-2"
 
-SALT = "ABHI24"
+SALT = "ABHIs24"
