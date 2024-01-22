@@ -43,8 +43,8 @@ jobs:
       - name: Change to Terraform directory
         run: cd terraform
         
-      - name: List files in Terraform directory
-        run: ls -R
+      - name: Display current directory
+        run: pwd
    
       - name: Initialize Terraform
         run: terraform init
