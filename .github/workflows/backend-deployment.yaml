@@ -40,11 +40,17 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_REGION }}
 
+      - name: Display current directory
+        run: ls -l
+
       - name: Change to Terraform directory
-        run: cd home/runner/work/auth_sol/auth_sol/terraform
+        run: cd terraform
         
       - name: Display current directory
         run: pwd
+     
+
+
    
       - name: Initialize Terraform
         run: terraform init
