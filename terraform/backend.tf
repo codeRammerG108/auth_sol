@@ -4,8 +4,8 @@ provider "aws" {
 
 terraform {
   backend "s3" {
-    bucket = "tfstates-composable-solution-auth"
-    dynamodb_table = "tfstates-composable-solution-auth-lock"
+    bucket = "tfstate-magiclink-auth"
+    dynamodb_table = "tfstate-magiclink"
     key = "states"
     region = "us-west-2"
     encrypt = true 
