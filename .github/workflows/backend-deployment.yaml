@@ -44,14 +44,11 @@ jobs:
         run: ls -l
 
       - name: Change to Terraform directory
-        run: cd terraform
+        run: cd dist
         
       - name: Display current directory
         run: pwd
-     
-
-
-   
+        
       - name: Initialize Terraform
         run: terraform init
    
