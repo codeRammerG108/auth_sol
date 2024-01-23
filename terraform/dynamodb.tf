@@ -1,9 +1,9 @@
 resource "aws_dynamodb_table" "dynamodb_table" {
-  name           = "${var.project_name}_SecretsTablePasswordless"
-  billing_mode   = "PAY_PER_REQUEST"
-  hash_key       = "userNameHash"
+  name         = "${var.project_name}_SecretsTablePasswordless"
+  billing_mode = "PAY_PER_REQUEST"
+  hash_key     = "userNameHash"
 
- attribute {
+  attribute {
     name = "userNameHash"
     type = "B"
   }

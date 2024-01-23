@@ -20,10 +20,10 @@ resource "aws_iam_role" "role_create_auth_challenge" {
 }
 
 # IAM Policy for Lambda
-  resource "aws_iam_policy" "policy_create_auth_challenge" {
-    name        = "${var.project_name}_aws_policy_create_auth_challenge"
-    description = "AWS IAM Policy for managing AWS Lambda role"
-    policy=<<EOF
+resource "aws_iam_policy" "policy_create_auth_challenge" {
+  name        = "${var.project_name}_aws_policy_create_auth_challenge"
+  description = "AWS IAM Policy for managing AWS Lambda role"
+  policy      = <<EOF
 {
       "Version": "2012-10-17",
       "Statement": [
@@ -80,7 +80,7 @@ EOF
 resource "aws_iam_role_policy_attachment" "policy_attachment_create_auth_challenge" {
   role       = aws_iam_role.role_create_auth_challenge.name
   policy_arn = aws_iam_policy.policy_create_auth_challenge.arn
-  depends_on = [ aws_kms_key.composable_authentication_solution_kms ]
+  depends_on = [aws_kms_key.composable_authentication_solution_kms]
 }
 
 # Lambda Deployment Package
@@ -96,12 +96,12 @@ resource "aws_lambda_function" "create_auth_challenge" {
   role             = aws_iam_role.role_create_auth_challenge.arn
   handler          = "index.handler"
   runtime          = "nodejs18.x"
-  architectures     = [ "arm64" ]
-  timeout = 5
+  architectures    = ["arm64"]
+  timeout          = 5
   filename         = data.archive_file.create_auth_challenge.output_path
   source_code_hash = data.archive_file.create_auth_challenge.output_base64sha256
   depends_on       = [aws_iam_role_policy_attachment.policy_attachment_create_auth_challenge]
-  environment  {
+  environment {
     variables = {
 
       ALLOWED_ORIGINS = join(",", var.allowed_origins)
@@ -119,7 +119,7 @@ resource "aws_lambda_function" "create_auth_challenge" {
       SES_FROM_ADDRESS = var.ses_email
 
       SES_REGION = var.aws_region
-      
+
       SALT = var.SALT
     }
   }

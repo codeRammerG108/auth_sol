@@ -1,7 +1,7 @@
 # Variables
-variable "myregion" {}
+# variable "myregion" {}
 
-variable "accountId" {}
+# variable "accountId" {}
 
 # API Gateway
 resource "aws_api_gateway_rest_api" "composable_auth_api_gateway" {
@@ -17,12 +17,12 @@ resource "aws_api_gateway_resource" "resource" {
 resource "aws_api_gateway_method" "method" {
   rest_api_id   = aws_api_gateway_rest_api.composable_auth_api_gateway.id
   resource_id   = aws_api_gateway_resource.resource.id
-  http_method   = "GET"
+  http_method   = "POST"
   authorization = "NONE"
 }
 
 resource "aws_api_gateway_integration" "integration" {
-  rest_api_id             = aws_api_gateway_rest_api.api.id
+  rest_api_id             = aws_api_gateway_rest_api.composable_auth_api_gateway.id
   resource_id             = aws_api_gateway_resource.resource.id
   http_method             = aws_api_gateway_method.method.http_method
   integration_http_method = "POST"
@@ -31,11 +31,11 @@ resource "aws_api_gateway_integration" "integration" {
 }
 
 resource "aws_api_gateway_deployment" "composable_auth_api_gateway_deployment" {
-  depends_on = [aws_api_gateway_rest_api.composable_auth_api_gateway]
+  depends_on  = [aws_api_gateway_rest_api.composable_auth_api_gateway]
   rest_api_id = aws_api_gateway_rest_api.composable_auth_api_gateway.id
 
   triggers = {
-    redeployment = sha1(jsonencode(aws_api_gateway_rest_api.example.body))
+    redeployment = sha1(jsonencode(aws_api_gateway_rest_api.composable_auth_api_gateway.body))
   }
 
   lifecycle {

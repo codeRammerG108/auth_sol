@@ -1,6 +1,6 @@
 project_name = "magicLink-solution"
 
-allowed_origins = [ "http://localhost:5173", "*" ]
+allowed_origins = ["http://localhost:5173", "*"]
 
 ses_email = "Abhishek.Sandliya@triconinfotech.com"
 

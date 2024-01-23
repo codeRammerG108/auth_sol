@@ -20,10 +20,10 @@ resource "aws_iam_role" "role_define_auth_challenge" {
 }
 
 # IAM Policy for Lambda
-  resource "aws_iam_policy" "policy_define_auth_challenge" {
-    name        = "${var.project_name}_aws_policy_define_auth_challenges"
-    description = "AWS IAM Policy for managing AWS Lambda role"
-    policy=<<EOF
+resource "aws_iam_policy" "policy_define_auth_challenge" {
+  name        = "${var.project_name}_aws_policy_define_auth_challenges"
+  description = "AWS IAM Policy for managing AWS Lambda role"
+  policy      = <<EOF
 {
     "Version": "2012-10-17",
     "Statement":
@@ -58,23 +58,23 @@ data "archive_file" "define_auth_challenge" {
 # Create a lambda function
 # In terraform ${path.module} is the current directory.
 resource "aws_lambda_function" "define_auth_challenge" {
- filename                       = "${path.module}/../dist/lambda/define_auth_challenge.zip"
- function_name                  = "${var.project_name}_define_auth_challenge"
- role                           =  aws_iam_role.role_define_auth_challenge.arn
- handler                        = "index.handler"
- runtime                        = "nodejs18.x"
- timeout                        = 5
- source_code_hash = data.archive_file.define_auth_challenge.output_base64sha256
- architectures                  = ["arm64"]
- depends_on                     = [aws_iam_role_policy_attachment.policy_attachment_define_auth_challenge]
- environment {
-   variables = {
-     LOG_LEVEL = var.log_level
-   }
- }
+  filename         = "${path.module}/../dist/lambda/define_auth_challenge.zip"
+  function_name    = "${var.project_name}_define_auth_challenge"
+  role             = aws_iam_role.role_define_auth_challenge.arn
+  handler          = "index.handler"
+  runtime          = "nodejs18.x"
+  timeout          = 5
+  source_code_hash = data.archive_file.define_auth_challenge.output_base64sha256
+  architectures    = ["arm64"]
+  depends_on       = [aws_iam_role_policy_attachment.policy_attachment_define_auth_challenge]
+  environment {
+    variables = {
+      LOG_LEVEL = var.log_level
+    }
+  }
 }
 
-    
+
 # Lambda Resource Policy
 resource "aws_lambda_permission" "resource_policy_define_auth" {
   action        = "lambda:InvokeFunction"

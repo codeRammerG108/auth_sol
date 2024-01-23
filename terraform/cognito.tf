@@ -4,11 +4,11 @@ resource "aws_cognito_user_pool" "composable_auth_user_pool" {
   mfa_configuration = "OFF"
 
   password_policy {
-    minimum_length    = 8
-    require_numbers   = true
-    require_uppercase = true
-    require_lowercase = true
-    require_symbols   = true
+    minimum_length                   = 8
+    require_numbers                  = true
+    require_uppercase                = true
+    require_lowercase                = true
+    require_symbols                  = true
     temporary_password_validity_days = 7
   }
 
@@ -52,10 +52,10 @@ resource "aws_cognito_user_pool_client" "composable_auth_user_pool_client" {
 
   explicit_auth_flows = ["ALLOW_ADMIN_USER_PASSWORD_AUTH", "ALLOW_CUSTOM_AUTH", "ALLOW_USER_PASSWORD_AUTH", "ALLOW_USER_SRP_AUTH", "ALLOW_REFRESH_TOKEN_AUTH"]
 
-  token_validity_units {     
-    id_token     = "minutes"     
-    access_token = "minutes"     
-    refresh_token = "minutes"   
+  token_validity_units {
+    id_token      = "minutes"
+    access_token  = "minutes"
+    refresh_token = "minutes"
   }
 
 }

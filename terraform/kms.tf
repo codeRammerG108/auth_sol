@@ -1,8 +1,8 @@
 resource "aws_kms_key" "composable_authentication_solution_kms" {
-  description             = "${var.project_name}_KMS_stack"
+  description              = "${var.project_name}_KMS_stack"
   customer_master_key_spec = "RSA_2048"
-  key_usage = "SIGN_VERIFY"
-  
+  key_usage                = "SIGN_VERIFY"
+
 }
 
 # resource "aws_kms_key_policy" "policy_kms" {
