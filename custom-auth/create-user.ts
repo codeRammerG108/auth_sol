@@ -1,4 +1,4 @@
-import { CognitoIdentityServiceProvider } from "aws-sdk";
+import { CognitoIdentityProvider } from "@aws-sdk/client-cognito-identity-provider";
 import { logger} from "./common.js";
 
 let config = {
@@ -47,8 +47,8 @@ const CreateUserHandler = async(event: any, context: any, callback: any) => {
           console.log("User getting created in cognito user pool.")
 
           //Getting AWS CognitoIdentity Service Provier to add User
-          const cognitoIdentityServiceProvider = new CognitoIdentityServiceProvider();
-          const createUserResponse = await cognitoIdentityServiceProvider.adminCreateUser(params).promise();
+          const cognitoIdentityServiceProvider = new CognitoIdentityProvider();
+          const createUserResponse = await cognitoIdentityServiceProvider.adminCreateUser(params);
 
           //User Added
           console.log("User created successfully:", createUserResponse);

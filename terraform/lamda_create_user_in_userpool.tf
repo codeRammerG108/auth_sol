@@ -42,7 +42,7 @@ resource "aws_iam_policy" "policy_add_cognito_user" {
           "cognito-idp:AdminCreateUser"
         ],
         "Resource" : [
-          "${aws_cognito_user_pool.aws_cognito_user_pool.arn}"
+          "${aws_cognito_user_pool.composable_auth_user_pool.arn}"
         ]
       }
     ]
@@ -82,10 +82,10 @@ resource "aws_lambda_function" "add_cognito_user" {
 }
 
 #Lambda Resource Policy
-resource "aws_lambda_permission" "resource_policy_create_auth" {
+resource "aws_lambda_permission" "resource_policy_create_users" {
   action        = "lambda:InvokeFunction"
   function_name = aws_lambda_function.add_cognito_user.function_name
   principal     = "apigateway.amazonaws.com"
-  source_arn    = "aws_api_gateway_rest_api.composable_auth_api_gateway.arn"
-  # source_arn = "arn:aws:execute-api:${var.myregion}:${var.accountId}:${aws_api_gateway_rest_api.api.id}/*/${aws_api_gateway_method.method.http_method}${aws_api_gateway_resource.resource.path}"
+ # source_arn    = "${aws_api_gateway_rest_api.composable_auth_api_gateway.arn}"
+   source_arn = "arn:aws:execute-api:${var.aws_region}:${data.aws_caller_identity.current.account_id}:${aws_api_gateway_rest_api.composable_auth_api_gateway.id}/*/${aws_api_gateway_method.method.http_method}${aws_api_gateway_resource.resource.path}"
 }
