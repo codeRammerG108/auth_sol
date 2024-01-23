@@ -39,7 +39,11 @@ resource "aws_iam_policy" "policy_add_cognito_user" {
         "Sid" : "Statement1",
         "Effect" : "Allow",
         "Action" : [
-          "cognito-idp:AdminCreateUser"
+      "cognito-idp:GetUser",
+      "cognito-idp:ListUserPools",
+      "cognito-idp:AdminGetUser",
+      "cognito-idp:AdminCreateUser",
+      "cognito-idp:ListUsers",
         ],
         "Resource" : [
           "${aws_cognito_user_pool.composable_auth_user_pool.arn}"
