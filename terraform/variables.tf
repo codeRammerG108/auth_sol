@@ -38,3 +38,4 @@ variable "SALT" {
   type        = string
   default     = "ANYNAME2024"
 }
+
