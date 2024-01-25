@@ -1,4 +1,5 @@
 dist
 .terraform*
 node_modules
-./bundle.ts
+terraform-state-lock-frontend
+terraform-state-lock-backend
