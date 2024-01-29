@@ -63,6 +63,7 @@ resource "aws_api_gateway_deployment" "composable_auth_api_gateway_deployment" {
 }
  
 resource "aws_api_gateway_stage" "example" {
+  depends_on = [aws_api_gateway_deployment.composable_auth_api_gateway_deployment]
   deployment_id = aws_api_gateway_deployment.composable_auth_api_gateway_deployment.id
   rest_api_id   = aws_api_gateway_rest_api.composable_auth_api_gateway.id
   stage_name    = "dev"

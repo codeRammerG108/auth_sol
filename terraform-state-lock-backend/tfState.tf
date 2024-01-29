@@ -1,5 +1,5 @@
 resource "aws_s3_bucket" "backendS3" {
-  bucket = "tfstate-magiclink-solution-auth"
+  bucket = "tfstate-magiclink-solution-auth-backend"
 }
 
 resource "aws_s3_bucket_versioning" "versioning" {
@@ -19,7 +19,7 @@ resource "aws_s3_bucket_server_side_encryption_configuration" "encryption" {
 }
 
 resource "aws_dynamodb_table" "backendDynamoDB" {
-  name = "tfstate-magiclink-solution-auth-lock"
+  name = "tfstate-magiclink-solution-auth-lock-backend"
   hash_key = "LockID"
   billing_mode = "PAY_PER_REQUEST"
   attribute {
