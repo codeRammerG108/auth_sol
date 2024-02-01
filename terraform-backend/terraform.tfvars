@@ -10,4 +10,4 @@ aws_region = "us-west-2"
 
 SALT = "ABHIs24"
 
-
+create_resource = true

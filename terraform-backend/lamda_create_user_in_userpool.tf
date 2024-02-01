@@ -1,9 +1,7 @@
-# IAM Role for Lambda
 resource "aws_iam_role" "role_add_cognito_user" {
+  count = var.create_resource ? 1 : 0
   name = "${var.project_name}_add_cognito_user"
- 
-  # Terraform's "jsonencode" function converts a
-  # Terraform expression result to valid JSON syntax.
+  # Terraform's "jsonencode" function converts a terraform expression result to valid JSON syntax.
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
     Statement = [
@@ -19,8 +17,9 @@ resource "aws_iam_role" "role_add_cognito_user" {
   })
 }
  
-# IAM Policy for Lambda
+# # IAM Policy for Lambda
 resource "aws_iam_policy" "policy_add_cognito_user" {
+  count = var.create_resource ? 1 : 0
   name        = "${var.project_name}_aws_policy_add_cognito_user"
   description = "AWS IAM Policy for managing AWS Lambda role"
   policy = jsonencode({
@@ -49,29 +48,32 @@ resource "aws_iam_policy" "policy_add_cognito_user" {
   })
 }
  
-# Attach IAM Policy to IAM Role
+# # Attach IAM Policy to IAM Role
 resource "aws_iam_role_policy_attachment" "policy_attachment_add_cognito_user" {
-  role       = aws_iam_role.role_add_cognito_user.name
-  policy_arn = aws_iam_policy.policy_add_cognito_user.arn
+  count = var.create_resource ? 1 : 0
+  role       = aws_iam_role.role_add_cognito_user[count.index].name
+  policy_arn = aws_iam_policy.policy_add_cognito_user[count.index].arn
 }
  
-# Lambda Deployment Package
+# # Lambda Deployment Package
 data "archive_file" "add_cognito_user" {
+  count = var.create_resource ? 1 : 0
   type        = "zip"
   source_file = "${path.module}/../dist/service/custom-auth/create-user/index.mjs"
   output_path = "${path.module}/../dist/lambda/create_user.zip"
 }
  
-# Lambda Function
+# # Lambda Function
 resource "aws_lambda_function" "add_cognito_user" {
+  count = var.create_resource ? 1 : 0
   function_name    = "${var.project_name}_add_cognito_user"
-  role             = aws_iam_role.role_add_cognito_user.arn
+  role             = aws_iam_role.role_add_cognito_user[count.index].arn
   handler          = "index.handler"
   runtime          = "nodejs18.x"
   architectures    = ["arm64"]
   timeout          = 5
-  filename         = data.archive_file.add_cognito_user.output_path
-  source_code_hash = data.archive_file.add_cognito_user.output_base64sha256
+  filename         = data.archive_file.add_cognito_user[count.index].output_path
+  source_code_hash = data.archive_file.add_cognito_user[count.index].output_base64sha256
   depends_on       = [aws_iam_role_policy_attachment.policy_attachment_add_cognito_user, aws_cognito_user_pool.composable_auth_user_pool]
   environment {
     variables = {
@@ -83,9 +85,10 @@ resource "aws_lambda_function" "add_cognito_user" {
  
 #Lambda Resource Policy
 resource "aws_lambda_permission" "resource_policy_create_users" {
+  count = var.create_resource ? 1 : 0
   action        = "lambda:InvokeFunction"
-  function_name = aws_lambda_function.add_cognito_user.function_name
+  function_name = aws_lambda_function.add_cognito_user[count.index].function_name
   principal     = "apigateway.amazonaws.com"
  # source_arn    = "${aws_api_gateway_rest_api.composable_auth_api_gateway.arn}"
-   source_arn = "arn:aws:execute-api:${var.aws_region}:${data.aws_caller_identity.current.account_id}:${aws_api_gateway_rest_api.composable_auth_api_gateway.id}/*/${aws_api_gateway_method.method.http_method}${aws_api_gateway_resource.resource.path}"
+   source_arn = "arn:aws:execute-api:${var.aws_region}:${data.aws_caller_identity.current.account_id}:${aws_api_gateway_rest_api.composable_auth_api_gateway[count.index].id}/*/${aws_api_gateway_method.method[count.index].http_method}${aws_api_gateway_resource.resource[count.index].path}"
 }

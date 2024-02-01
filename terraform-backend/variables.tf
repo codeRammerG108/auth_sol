@@ -39,3 +39,8 @@ variable "SALT" {
   default     = "ANYNAME2024"
 }
 
+variable "create_resource" {
+  description = "Flag to add user automatically in User Pool"
+  type = bool
+  default = false
+}
